@@ -12,8 +12,8 @@ if(isset($_SESSION['ident'])){
           <div class="action_pos">
             <div class="action_container action_rss">
               <div class="action_logo action"></div>
-              <div class="delete_shortcut action"></div>
-              <div class="edit_shortcut action"></div>
+              <div class="delete action"></div>
+              <div class="edit action"></div>
             </div>
           </div>
           <?php echo $lien['title'] ?>

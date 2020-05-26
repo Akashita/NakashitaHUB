@@ -21,8 +21,8 @@ if(isset($_SESSION['ident'])){
           </div>
           <div class="action_container action_shortcut">
             <div class="action_logo action"></div>
-            <div class="delete_shortcut action"></div>
-            <div class="edit_shortcut action"></div>
+            <div class="delete action"></div>
+            <div class="edit action"></div>
           </div>
         </div>
       </div>
