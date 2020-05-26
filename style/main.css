@@ -294,22 +294,6 @@ section#shortcuts{
 }
 
 
-
-
-
-
-#blur{
-  display: none;
-  position: absolute;
-  background: radial-gradient(circle, rgba(63,94,251,0) 19%, rgba(0,0,0,0.75) 100%);
-  z-index: 500;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-
 /*-----------------------------------------------------------
                       Slide_container
 -------------------------------------------------------------*/
@@ -412,4 +396,166 @@ section#shortcuts{
 
 .slide_plus_logo{
   background-image: url(../img/croix.png);
+}
+
+/*-----------------------------------------------------------
+                      POPUP
+-------------------------------------------------------------*/
+
+#blur{
+  display: none;
+  position: absolute;
+  background: radial-gradient(circle, rgba(63,94,251,0) 19%, rgba(0,0,0,0.75) 100%);
+  z-index: 500;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#popup{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  z-index: 501;
+}
+.popup_container{
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: fixed;
+  width: 400px;
+  background-color: #242629;
+  z-index: 999;
+  border-radius: 12px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.7);
+  overflow: hidden;
+}
+
+.popup_nav{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(150,150,150,0.1);
+  color: white;
+  font-size: 1.2em;
+}
+
+.popup_form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.popup_form > *{
+  margin-bottom: 20px;
+}
+
+input:last-child{
+  padding: 10px 30px 10px 30px;
+  margin-bottom: 0;
+}
+
+input[type='text'], input[type='button'].submit{
+  width: 200px;
+  padding: 10px 30px 10px 30px;
+}
+
+
+input[type="number"]{
+  padding: 10px;
+  width: 40px;
+}
+
+label{
+  color: rgb(50,50,50);
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 2px solid gray;
+  border-bottom: 3px solid gray;
+  background-color: white;
+}
+
+.input_with_label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+input{
+  font-family: 'Ubuntu';
+  font-size: 1em;
+  border-top: none;
+  border-right: none;
+  border-left: 2px solid gray;
+  border-bottom: 3px solid gray;
+  border-radius: 5px;
+}
+
+input[type='button']{
+  cursor: pointer;
+  position: relative;
+  color: gray;
+}
+
+input[type='button']:active{
+  top: 1px;
+}
+
+input[type='button']#keymap{
+  border-radius: 100px;
+  padding: 10px;
+  background-color: white;
+}
+
+/*-----------------------------------------------------------
+                      ERROR
+-------------------------------------------------------------*/
+
+#error_container{
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: -1000px;
+  max-width: 350px;
+  min-width: 150px;
+  background-color: #bf5454;
+  border-radius: 12px;
+  border-bottom: 5px solid #a04545;
+  border-left: 4px solid #a04545;
+}
+
+#error_title{
+  display: flex;
+  align-items: center;
+  font-size: 1.8em;
+  justify-content: center;
+  height: 50px;
+  width: 80%;
+  margin-top: 10px;
+  background-color: #994141;
+  border-radius: 12px;
+  border-bottom: 5px solid #7c2a2a;
+  border-left: 4px solid #7c2a2a;
+}
+
+#error_content{
+  padding: 20px;
 }
