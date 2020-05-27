@@ -28,6 +28,7 @@ $(document).ready(function(){
     });
   });
 
+  //Send shortcut to database
   $('#send_shortcut').on('click', function(){
     let shortcut_name = $('#shortcut_name').val();
     let shortcut_description = $('#shortcut_description').val();
@@ -50,7 +51,24 @@ $(document).ready(function(){
     });
   });
 
-  $('#shortcut_container').on('click', '.delete_shortcut', function(){
+  //Show edit shortcut popup
+  $('#shortcut_container').on('click', '.edit', function(){
+    let result = $(this).closest('.shortcut').attr('id');
+    id_shortcut = result.substring(9);
+    $.post('set_get/get_shortcut_json.php',{id_shortcut:id_shortcut},function(data){
+      data = JSON.parse(data);
+      $('#edit_shortcut_name').val(data.nom);
+      $('#edit_shortcut_image').val(data.image);
+      $('#edit_shortcut_description').val(data.description);
+      $('#edit_shortcut_url').val(data.website);
+      $('#edit_keymap').attr('value', data.letter);
+    });
+    $('#edit_send_shortcut').data('shortcut_id', id_shortcut);
+    open_popup('edit_shortcut_container');
+  });
+
+  //Delete shortcut
+  $('#shortcut_container').on('click', '.delete', function(){
     //ajout de confirmation ??
     let result = $(this).closest('.shortcut').attr('id');
     id_shortcut = result.substring(9);
@@ -64,17 +82,78 @@ $(document).ready(function(){
     });
   });
 
+
+  //Send edited shortcut
+  $('#edit_send_shortcut').on('click', function(){
+    let shortcut_id = $(this).data('shortcut_id');
+    let shortcut_name = $('#edit_shortcut_name').val();
+    let shortcut_description = $('#edit_shortcut_description').val();
+    let shortcut_url = $('#edit_shortcut_url').val();
+    let shortcut_image = $('#edit_shortcut_image').val();
+    let shortcut_keymap = $('#edit_keymap').attr('value');
+    $.post('set_get/edit_shortcut.php',{shortcut_id:shortcut_id, shortcut_name:shortcut_name, shortcut_description:shortcut_description, shortcut_url:shortcut_url, shortcut_image:shortcut_image, shortcut_keymap:shortcut_keymap}, function(data){
+      if(data != 'false'){
+        shortcut_update();
+        close_popup('edit_shortcut_container');
+      } else {
+        shortcut_update();
+        close_popup('edit_shortcut_container');
+        show_error("error : ajout du raccourci");
+      }
+    });
+  });
+
+  //Close shortcut popup
+  $('#close_edit_shortcut').on('click', function(){
+    close_popup('edit_shortcut_container');
+  });
+
   function shortcut_update(){
     $.post('set_get/get_shortcut.php', function(data){
       $('#shortcut_container').html(data);
     });
   }
 
-  $('#shortcut_container').on('click', '.edit_shortcut', function(){
-    let result = $(this).closest('.shortcut').attr('id');
-    id_shortcut = result.substring(9);
-    //TODO
+  //-----------------------------------------------------
+  //              WIDGET CONTROLER
+  //-----------------------------------------------------
+
+  var actual_widget = 'rss_widget';
+  var actual_dot = 'nav_widget_button_rss';
+  show_widget(actual_dot, actual_widget);
+
+  $('.nav_widget_button').on('click', function(){
+    if($(this).attr('id') != actual_dot){
+      hide_widget(actual_dot, actual_widget);
+      actual_dot = $(this).attr('id');
+      switch (actual_dot) {
+        case 'nav_widget_button_weather':
+          actual_widget = 'weather_widget';
+          break;
+        case 'nav_widget_button_rss':
+          actual_widget = 'rss_widget';
+          break;
+        case 'nav_widget_button_calendar':
+          actual_widget = 'calendar_widget';
+          break;
+        default:
+      }
+      show_widget(actual_dot, actual_widget);
+    }
   });
+
+  function show_widget(button, id_widget){
+    $('#'+button).addClass("nav_widget_button_dot");
+    $('#'+id_widget).css('display', 'block');
+    $('#'+id_widget).animate({top: '0px', left: '0px', opacity: '1'}, 200);
+  }
+
+  function hide_widget(button, id_widget){
+    $('#'+button).removeClass("nav_widget_button_dot");
+    $('#'+id_widget).animate({top: '200px', opacity: '0'}, 200, function(){
+        $(this).removeAttr('style');
+    });
+  }
 
   //-----------------------------------------------------
   //              RSS CONTROLER
@@ -105,6 +184,63 @@ $(document).ready(function(){
   $('#close_add_rss').on('click', function(){
     close_popup('add_rss_container');
   });
+
+  $('#close_edit_rss').on('click', function(){
+    close_popup('edit_rss_container');
+  });
+
+  function rss_update(){
+    $.post('set_get/get_rss.php', function(data){
+      $('#article_container').html(data);
+    });
+  }
+
+  $('#article_container').on('click', '.delete', function(){
+    let result = $(this).closest('.rss_theme_container').attr('id');
+    id_rss = result.substring(4);
+    $.post('set_get/delete_rss.php',{id_rss:id_rss}, function(data){
+      if(data == 'false'){
+        show_error("error : supression RSS");
+      }
+    });
+    $.when($('#'+result).fadeOut(250)).then(function(){
+      rss_update();
+    });
+  });
+
+  //Show edit shortcut popup
+  $('#article_container').on('click', '.edit', function(){
+    let result = $(this).closest('.rss_theme_container').attr('id');
+    id_rss = result.substring(4);
+    $.post('set_get/get_rss_json.php',{id_rss:id_rss},function(data){
+      data = JSON.parse(data);
+      $('#edit_rss_title').val(data.title);
+      $('#edit_rss_link').val(data.website);
+      $('#edit_rss_quantity').val(data.howmany);
+    });
+    $('#edit_send_rss').data('id_rss', id_rss);
+    open_popup('edit_rss_container');
+  });
+
+
+  //Send edited shortcut
+  $('#edit_send_rss').on('click', function(){
+    let rss_id = $(this).data('id_rss');
+    let rss_title = $('#edit_rss_title').val();
+    let rss_link = $('#edit_rss_link').val();
+    let rss_quantity = $('#edit_rss_quantity').val();
+    $.post('set_get/edit_rss.php',{rss_id:rss_id, rss_title:rss_title, rss_link:rss_link, rss_quantity:rss_quantity}, function(data){
+      if(data != 'false'){
+        rss_update();
+        close_popup('edit_rss_container');
+      } else {
+        rss_update();
+        close_popup('edit_rss_container');
+        show_error("error : modification du feed");
+      }
+    });
+  });
+
 
   function rss_update(){
     $.post('set_get/get_rss.php', function(data){
@@ -140,6 +276,7 @@ $(document).ready(function(){
 
   function calendar_update(){
     $.post('set_get/get_calendar.php', function(data){
+      console.log(data);
       $('#event_container').html(data);
     });
   }
@@ -178,7 +315,7 @@ $(document).ready(function(){
 });
 
 function close_popup(name){
-  $('#shortcut_container').css('filter', 'none');
+  $('main').css('filter', 'none');
   $('#'+name).fadeOut(250);
   $('#blur').fadeOut(250);
   $('#popup').fadeOut(250);
@@ -186,7 +323,7 @@ function close_popup(name){
 
 function open_popup(name){
   $('#popup').css('display', 'flex');
-  $('#shortcut_container').css('filter', 'blur(2px)');
+  $('main').css('filter', 'blur(2px)');
   $('#'+name).fadeIn(250);
   $('#blur').fadeIn(250);
 }

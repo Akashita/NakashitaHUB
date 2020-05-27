@@ -18,7 +18,7 @@
   }
 
   function get_calendar($ident_user){
-    $stmt = bdd()->prepare("SELECT c.* FROM calendar c JOIN user u ON c.ident_user = u.ident WHERE c.ident_user = ?");
+    $stmt = bdd()->prepare("SELECT * FROM calendar WHERE ident_user = ?");
     $executed = $stmt->execute([$ident_user]);
 
     $tab_calendar = array();

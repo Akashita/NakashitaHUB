@@ -20,8 +20,13 @@
     return $stmt->execute([$letter, $name, $description, $image, $url, $ident_user]);
   }
 
-  function get_shortcut($ident_user){
-    $stmt = bdd()->prepare("SELECT s.* FROM shortcut s JOIN user u ON s.ident_user = u.ident WHERE s.ident_user = ?");
+  function edit_shortcut($id, $letter, $name, $description, $image, $url, $ident_user){
+    $stmt = bdd()->prepare("UPDATE shortcut SET letter = ?, nom = ?, description = ?, image = ?, website = ? WHERE id_shortcut = ? AND ident_user = ?");
+    return $stmt->execute([$letter, $name, $description, $image, $url, $id, $ident_user]);
+  }
+
+  function get_shortcuts($ident_user){
+    $stmt = bdd()->prepare("SELECT * FROM shortcut WHERE ident_user = ?");
     $executed = $stmt->execute([$ident_user]);
 
     $tab_shortcut = array();
@@ -30,6 +35,18 @@
         array_push($tab_shortcut, $shortcut);
       }
       return $tab_shortcut;
+    } else {
+      return false;
+    }
+  }
+
+  function get_shortcut($ident_user, $id_shortcut){
+    $stmt = bdd()->prepare("SELECT s.* FROM shortcut s JOIN user u ON s.ident_user = u.ident WHERE s.ident_user = ? AND s.id_shortcut = ?");
+    $executed = $stmt->execute([$ident_user, $id_shortcut]);
+
+    $tab_shortcut = array();
+    if($executed){
+      return $stmt->fetch();
     } else {
       return false;
     }

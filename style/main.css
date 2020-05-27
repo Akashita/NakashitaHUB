@@ -75,8 +75,8 @@ section#shortcuts{
 }
 
 .shortcut{
-  width: 275px;
-  height: 325px;
+  width: 240px;
+  height: 290px;
   background-color: #242629;
   border-radius: 12px;
   margin: 10px;
@@ -135,8 +135,8 @@ section#shortcuts{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 110px;
-  width: 255px;
+  height: 75px;
+  width: 220px;
   left: 10px;
   top: -120px;
   overflow: hidden;
@@ -148,33 +148,53 @@ section#shortcuts{
 -------------------------------------------------------------*/
 
 nav#nav_widget{
-  width: 100%;
-  height: 70px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  background-color: #2F3136;
+  border-radius: 500px;
+  margin-bottom: 20px;
 }
 
 .nav_widget_button{
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50px;
   height: 50px;
-  background-color: gray;
   border-radius: 30px;
   transition: 0.1s all ease-out;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
-  margin: 0 5px 0 5px;
+  margin: 5px;
   box-shadow: 0 0 5px rgba(50,50,50,0.5);
+  border: 1px solid rgba(0,0,0,0);
 }
+
+.nav_widget_button::before{
+  position: absolute;
+  content: "";
+  width: 25px;
+  height: 5px;
+  border-radius: 20px;
+  top: 62px;
+  background-color: none;
+  transition: 0.5s all ease-out;
+}
+
+.nav_widget_button_dot::before{
+  background-color: white;
+  transition: 0.5s all ease-out;
+}
+
 
 .nav_widget_button:hover{
   transition: 0.1s all ease-out;
   border-radius: 20px;
+  border: 1px solid rgb(200,200,200);
 }
 
 .nav_widget_img{
@@ -186,14 +206,32 @@ section#widgets{
   width: 400px;
   height: 100%;
   float: right;
-  padding-right: 15px;
+  padding-right: 20px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+#widget_container{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 article.widget{
-  height: calc(100% - 70px);
+  display: none;
+  opacity: 0;
+  left: 50px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  transform: scale(1);
 }
+
 
 .widget_title{
   overflow: hidden;
@@ -202,7 +240,7 @@ article.widget{
   align-items: center;
   justify-content: flex-end;
   width: calc(100% - 40px);
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #2F3136;
   padding: 10px 20px 10px 20px;
 }
@@ -242,9 +280,90 @@ article.widget{
   display: flex;
   align-items: center;
   flex-direction: column;
-  border-radius: 2px;
-  padding: 3px;
+  border-radius: 5px;
+  padding: 5px;
   margin: 5px 0 5px 0;
+  background-color: #2F3136;
+}
+
+.rss_article{
+  width: calc(100% - 55px);
+  min-height: 40px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  position: relative;
+  padding: 5px 50px 5px 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: rgb(180,180,180);
+}
+
+.rss_button{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 0 3px rgb(100,100,100));
+  border-radius: 100px;
+  background-color: #2F3136;
+  background-image: url(../img/arrow.png);
+  background-size: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.rss_button:hover{
+  filter: drop-shadow(0 0 5px rgb(100,100,100));
+}
+
+.rss_article:last-child{
+  margin: 0;
+}
+
+/*-----------------------------------------------------------
+                     Calendar Widget
+-------------------------------------------------------------*/
+
+#event_container{
+  height: auto;
+}
+
+.event:first-child{
+  margin-top: 5px;
+}
+
+.event:last-child{
+  margin-bottom: 0;
+}
+
+.event{
+  background-color: #2F3136;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  position: relative;
+  padding: 5px 10px 5px 10px;
+  color: rgb(180,180,180);
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+
+.event_title{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  max-width: 50%;
+}
+
+.event_start{
+  max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+
 }
 
 /*-----------------------------------------------------------
@@ -291,11 +410,11 @@ article.widget{
 .action_shortcut{
   border-radius: 50px 20px 50px 50px;
   top: -320px;
-  left: 245px;
+  left: 210px;
 }
 
 .action_shortcut:hover{
-  left: 185px;
+  left: 150px;
 }
 
 .action_rss{
@@ -582,6 +701,7 @@ input[type='button']#keymap{
   border-radius: 12px;
   border-bottom: 5px solid #a04545;
   border-left: 4px solid #a04545;
+  z-index: 2000;
 }
 
 #error_title{

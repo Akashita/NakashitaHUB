@@ -28,56 +28,58 @@
         </section>
         <section id="widgets">
           <nav id="nav_widget">
-            <div class="nav_widget_button" style="background-image: url(img/ori.jpg)">
+            <div class="nav_widget_button" id="nav_widget_button_weather" style="background-image: url(img/ori.jpg)">
               <img src="img/weather.png" class="nav_widget_img" alt="Calendar button">
             </div>
-            <div class="nav_widget_button" style="background-image: url(img/background.jpg)">
+            <div class="nav_widget_button" id="nav_widget_button_rss" style="background-image: url(img/background.jpg)">
               <img src="img/rss.png" class="nav_widget_img" alt="Calendar button">
             </div>
-            <div class="nav_widget_button" style="background-image: url(img/nc.jpg)">
+            <div class="nav_widget_button" id="nav_widget_button_calendar" style="background-image: url(img/nc.jpg)">
               <img src="img/calendar.png" class="nav_widget_img" alt="Calendar button">
             </div>
           </nav>
-          <article class="widget" id="calendar_widget" style="display: none;">
-            <div class="widget_title">
-              <div class="slide_left_button slide_button" id="add_calendar">
-                <div class="slide_left_text slide_text">NOUVEAU</div>
-                <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+          <div id="widget_container">
+            <article class="widget" id="calendar_widget">
+              <div class="widget_title">
+                <div class="slide_left_button slide_button" id="add_calendar">
+                  <div class="slide_left_text slide_text">NOUVEAU</div>
+                  <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+                </div>
+                <span class="title_text">CALENDRIER</span>
+                <img class="title_logo" style="width: 22px;" src="img/calendar.png"/>
               </div>
-              <span class="title_text">CALENDRIER</span>
-              <img class="title_logo" style="width: 22px;" src="img/calendar.png"/>
-            </div>
-            <div class="widget_container" id="event_container">
-                <!-- Contain calendar events (PHP generated) -->
-            </div>
-          </article>
-          <article class="widget" id="rss_widget">
-            <div class="widget_title">
-              <div class="slide_left_button slide_button" id="add_rss">
-                <div class="slide_left_text slide_text">NOUVEAU</div>
-                <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+              <div class="widget_container" id="event_container">
+                  <!-- Contain calendar events (PHP generated) -->
               </div>
-              <span class="title_text">RSS</span>
-              <img class="title_logo" style="width: 18px;" src="img/rss.png"/>
-            </div>
-            <div class="widget_container" id="article_container">
-                <!-- Contain rss feeds (PHP generated) -->
-            </div>
-          </article>
-          <article class="widget" id="weather_widget" style="display: none;">
-            <div class="widget_title">
-              <div class="slide_left_button slide_button" id="add_calendar">
-                <div class="slide_left_text slide_text">NOUVEAU</div>
-                <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+            </article>
+            <article class="widget" id="rss_widget">
+              <div class="widget_title">
+                <div class="slide_left_button slide_button" id="add_rss">
+                  <div class="slide_left_text slide_text">NOUVEAU</div>
+                  <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+                </div>
+                <span class="title_text">RSS</span>
+                <img class="title_logo" style="width: 18px;" src="img/rss.png"/>
               </div>
-              <span class="title_text">MÉTÉO</span>
-              <img class="title_logo" style="width: 25px;" src="img/weather.png"/>
-            </div>
-            <a class="weatherwidget-io" href="https://forecast7.com/fr/45d565d92/chambery/" data-label_1="Chambéry" data-label_2="Météo" data-font="Open Sans" data-icons="Climacons Animated" data-days="5" data-theme="mountains" data-basecolor="#36393F" data-accent="#2F3136" data-suncolor="#daa623" >Chambéry Météo</a>
-            <script>
-            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-            </script>
-          </article>
+              <div class="widget_container" id="article_container">
+                  <!-- Contain rss feeds (PHP generated) -->
+              </div>
+            </article>
+            <article class="widget" id="weather_widget">
+              <div class="widget_title">
+                <div class="slide_left_button slide_button" id="add_calendar">
+                  <div class="slide_left_text slide_text">NOUVEAU</div>
+                  <div class="slide_plus_logo slide_logo slide_left_logo"></div>
+                </div>
+                <span class="title_text">MÉTÉO</span>
+                <img class="title_logo" style="width: 25px;" src="img/weather.png"/>
+              </div>
+              <a class="weatherwidget-io" href="https://forecast7.com/fr/45d565d92/chambery/" data-label_1="Chambéry" data-label_2="Météo" data-font="Open Sans" data-icons="Climacons Animated" data-days="5" data-theme="mountains" data-basecolor="#36393F" data-accent="#2F3136" data-suncolor="#daa623" >Chambéry Météo</a>
+              <script>
+              !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+              </script>
+            </article>
+          </div>
         </section>
       </main>
       <div id="popup">
@@ -91,7 +93,7 @@
               <div class="slide_left_text slide_text">FERMER</div>
               <div class="slide_cross_logo slide_logo slide_left_logo"></div>
             </div>
-            Shortcut
+            Add new shortcut
           </div>
           <div id="add_shortcut_form" class="popup_form">
             <input type="text" id="shortcut_name" placeholder="Nom du raccourci" />
@@ -100,6 +102,25 @@
             <input type="text" id="shortcut_image" placeholder="URL de l'arrière plan" />
             <input type="button" id="keymap" value="keymap" />
             <input type="button" id="send_shortcut" class="submit" value="Envoyer"/>
+          </div>
+        </div>
+
+        <!-- Edit shortcut popup (default : display none) -->
+        <div id="edit_shortcut_container" class="popup_container">
+          <div id="edit_shortcut_nav" class="popup_nav">
+            <div class="slide_left_button slide_button" id="close_edit_shortcut">
+              <div class="slide_left_text slide_text">FERMER</div>
+              <div class="slide_cross_logo slide_logo slide_left_logo"></div>
+            </div>
+            Edit existing shortcut
+          </div>
+          <div id="edit_shortcut_form" class="popup_form">
+            <input type="text" id="edit_shortcut_name" placeholder="Nom du raccourci" />
+            <input type="text" id="edit_shortcut_description" placeholder="Description" />
+            <input type="text" id="edit_shortcut_url" placeholder="URL du site visé" />
+            <input type="text" id="edit_shortcut_image" placeholder="URL de l'arrière plan" />
+            <input type="button" id="edit_keymap" value="keymap" />
+            <input type="button" id="edit_send_shortcut" class="submit" value="Envoyer"/>
           </div>
         </div>
 
@@ -137,6 +158,27 @@
           </div>
         </div>
 
+        <!-- edit_rss popup (default : display none) -->
+        <div id="edit_rss_container" class="popup_container">
+          <div id="edit_rss_nav" class="popup_nav">
+            <div class="slide_left_button slide_button" id="close_edit_rss">
+              <div class="slide_left_text slide_text">FERMER</div>
+              <div class="slide_cross_logo slide_logo slide_left_logo"></div>
+            </div>
+            Edit Flux RSS
+          </div>
+          <div id="edit_rss_form" class="popup_form">
+            <input type="text" id="edit_rss_title" placeholder="Titre du flux" />
+            <input type="text" id="edit_rss_link" placeholder="Adresse du flux" />
+            <div class="input_with_label">
+              <label for="quantity">Nombre d'article à afficher</label>
+              <input type="number" id="edit_rss_quantity" name="quantity" min="1" max="5">
+            </div>
+            <input type="button" id="edit_send_rss" class="submit" value="Envoyer"/>
+          </div>
+        </div>
+
+        <!-- add_calendar popup (default : display none) -->
         <div id="add_calendar_container" class="popup_container">
           <div id="add_calendar_nav" class="popup_nav">
             <div class="slide_left_button slide_button" id="close_add_calendar">

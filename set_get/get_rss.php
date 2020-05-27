@@ -35,6 +35,9 @@ if(isset($_SESSION['ident'])){
           </div>
           <?php
         }
+        ?>
+        </div>
+        <?php
       }
     }
   }

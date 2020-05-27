@@ -1,9 +1,11 @@
 <?php
 
+session_start();
+include '../database_handler/bdd.php';
+
 include_once __DIR__ .'/../ICS_parser/iCalEasyReader.php';
 
 //$url = "http://ade6-usmb-ro.grenet.fr/jsp/custom/modules/plannings/direct_cal.jsp?resources=7318&projectId=1&calType=ical&login=iCalExport&password=73rosav&lastDate=2030-08-14";
-$url = __DIR__ .'/../ADECal.ics';
 
 //Date1 after $Date2
 function is_before($dateST1, $dateST2){
@@ -52,34 +54,55 @@ function event_to_local_time($event){
   return $event;
 }
 
+function date_to_string($date){
+  $year = substr($date, 0, 4);
+  $month = substr($date, 4, 2);
+  $day = substr($date, 6, 2);
+  $hour = substr($date, 9, 2);
+  $minute = substr($date, 11, 2);
 
-$ical = new iCalEasyReader();
-$lines = $ical->load(file_get_contents($url));
-$events = $lines['VEVENT'];
-
-$sorted_array = array();
-$now = date("Ymd"."\T"."His");
-foreach ($events as $event) {
-  $event = event_to_local_time($event);
-  if(is_before($now, $event['DTEND'])){
-    $sorted_array = add_to_sorted_array($sorted_array, $event);
-  }
+  return $day." ".$month." ".$year." à ".$heure."h".$minute;
 }
 
+if(isset($_SESSION['ident'])){
+  $urls = get_calendar($_SESSION['ident']);
 
-for ($i=0; $i < 4; $i++) {
-  if(isset($sorted_array[$i])){
-    ?>
-    <div class="event">
-      <div class="event_title">
-        <?php echo $sorted_array[$i]['SUMMARY'];?>
-      </div>
-      <div class="event_start">
-        14 juillet à 14h00
-      </div>
-    </div>
-    <?php
+  foreach ($urls as $key => $url) {
+    $url = $url['website'];
+
+    $ical = new iCalEasyReader();
+    $lines = $ical->load(file_get_contents($url));
+    $events = $lines['VEVENT'];
+
+    $sorted_array = array();
+    $now = date("Ymd"."\T"."His");
+    foreach ($events as $event) {
+      $event = event_to_local_time($event);
+      if(is_before($now, $event['DTEND'])){
+        $sorted_array = add_to_sorted_array($sorted_array, $event);
+      }
+    }
+
+
+    for ($i=0; $i < 4; $i++) {
+      if(isset($sorted_array[$i])){
+        ?>
+        <div class="event">
+          <div class="event_title">
+            <?php echo $sorted_array[$i]['SUMMARY'];?>
+          </div>
+          <div class="event_start">
+            <?php echo date_to_string($sorted_array[$i]['DTSTART']);?>
+          </div>
+        </div>
+        <?php
+      }
+    }
   }
+
+
+} else {
+  echo 'false';
 }
 
 
